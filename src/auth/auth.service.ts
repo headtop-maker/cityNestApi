@@ -17,7 +17,7 @@ export class AuthService {
   ) {}
 
   async signUp(singUpDto: SignUpDto): Promise<{ token: string }> {
-    const { name, email, password } = singUpDto;
+    const { name, email, password, banned, userRole } = singUpDto;
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -25,6 +25,8 @@ export class AuthService {
       name,
       email,
       password: hashedPassword,
+      banned,
+      userRole,
     });
 
     const token = this.jwtService.sign({ id: user._id });
@@ -46,6 +48,7 @@ export class AuthService {
       throw new UnauthorizedException('Ошибка пользователя или пароля');
     }
     const token = this.jwtService.sign({ id: user._id });
+    console.log('user', user);
 
     return { token };
   }

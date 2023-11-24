@@ -1,4 +1,13 @@
-import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
+import {
+  IsBoolean,
+  IsEmail,
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  MinLength,
+} from 'class-validator';
+import { UserRole } from '../schemas/user.schema';
 
 export class SignUpDto {
   @IsNotEmpty()
@@ -13,4 +22,14 @@ export class SignUpDto {
   @IsString()
   @MinLength(6)
   readonly password: string;
+
+  @IsOptional()
+  @IsNotEmpty()
+  @IsBoolean()
+  readonly banned: boolean;
+
+  @IsOptional()
+  @IsNotEmpty()
+  @IsEnum(UserRole, { message: 'Введите роль корректно' })
+  readonly userRole: UserRole;
 }
