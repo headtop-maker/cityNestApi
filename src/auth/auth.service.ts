@@ -38,9 +38,10 @@ export class AuthService {
     return { token, role: role.userRole };
   }
 
-  async login(loginDto: LoginDto): Promise<{ token: string }> {
+  async login(
+    loginDto: LoginDto,
+  ): Promise<{ token: string; role: UserRole; name: string }> {
     const { email, password } = loginDto;
-
     const user = await this.userModel.findOne({ email });
 
     if (!user) {
@@ -53,6 +54,8 @@ export class AuthService {
     }
     const token = this.jwtService.sign({ id: user._id });
 
-    return { token };
+    const role = await this.userModel.findOne({ email });
+
+    return { token, role: role.userRole, name: role.name };
   }
 }
