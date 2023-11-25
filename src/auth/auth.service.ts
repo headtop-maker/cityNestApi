@@ -1,6 +1,6 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { User } from './schemas/user.schema';
+import { User, UserRole } from './schemas/user.schema';
 import { Model } from 'mongoose';
 
 import * as bcrypt from 'bcryptjs';
@@ -16,7 +16,9 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async signUp(singUpDto: SignUpDto): Promise<{ token: string }> {
+  async signUp(
+    singUpDto: SignUpDto,
+  ): Promise<{ token: string; role: UserRole }> {
     const { name, email, password, banned, userRole } = singUpDto;
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -31,7 +33,9 @@ export class AuthService {
 
     const token = this.jwtService.sign({ id: user._id });
 
-    return { token };
+    const role = await this.userModel.findOne({ email });
+
+    return { token, role: role.userRole };
   }
 
   async login(loginDto: LoginDto): Promise<{ token: string }> {
@@ -48,7 +52,6 @@ export class AuthService {
       throw new UnauthorizedException('Ошибка пользователя или пароля');
     }
     const token = this.jwtService.sign({ id: user._id });
-    console.log('user', user);
 
     return { token };
   }
