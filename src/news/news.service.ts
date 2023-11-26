@@ -31,11 +31,11 @@ export class NewsService {
       throw new BadRequestException('некорректный ID');
     }
 
-    const book = await this.newsModel.findById(id);
+    const news = await this.newsModel.findById(id);
 
-    if (!book) {
+    if (!news) {
       throw new NotFoundException('не найдено');
     }
-    return book;
+    return news;
   }
 }
