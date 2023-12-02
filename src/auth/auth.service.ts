@@ -58,4 +58,24 @@ export class AuthService {
 
     return { token, role: role.userRole, name: role.name };
   }
+
+  async allUsers(): Promise<
+    {
+      name: string;
+      email: string;
+      banned: boolean;
+      userRole: UserRole;
+    }[]
+  > {
+    const users = await this.userModel.find();
+
+    const filtred = users.map((item) => ({
+      name: item.name,
+      email: item.email,
+      banned: item.banned,
+      userRole: item.userRole,
+    }));
+
+    return filtred;
+  }
 }
