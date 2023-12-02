@@ -21,6 +21,7 @@ export class AuthController {
   @Get()
   async getAllUsers(): Promise<
     {
+      id: number;
       name: string;
       email: string;
       banned: boolean;

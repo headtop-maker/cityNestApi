@@ -61,6 +61,7 @@ export class AuthService {
 
   async allUsers(): Promise<
     {
+      id: number;
       name: string;
       email: string;
       banned: boolean;
@@ -70,6 +71,7 @@ export class AuthService {
     const users = await this.userModel.find();
 
     const filtred = users.map((item) => ({
+      id: item.id,
       name: item.name,
       email: item.email,
       banned: item.banned,
