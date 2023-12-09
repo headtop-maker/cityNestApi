@@ -48,6 +48,10 @@ export class AuthService {
       throw new UnauthorizedException('Ошибка пользователя или пароля');
     }
 
+    if (user.banned) {
+      throw new UnauthorizedException('Пользователь не активирован');
+    }
+
     const isPasswordMathched = await bcrypt.compare(password, user.password);
     if (!isPasswordMathched) {
       throw new UnauthorizedException('Ошибка пользователя или пароля');

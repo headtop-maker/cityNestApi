@@ -18,7 +18,7 @@ export class User {
   @Prop()
   password: string;
 
-  @Prop({ default: false })
+  @Prop({ default: true })
   banned: boolean;
 
   @Prop({ default: UserRole.simpleUser })
