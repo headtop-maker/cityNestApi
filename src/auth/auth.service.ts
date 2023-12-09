@@ -80,4 +80,15 @@ export class AuthService {
 
     return filtred;
   }
+
+  async updateUser(
+    id: string,
+    banned: { banned: boolean },
+  ): Promise<SignUpDto> {
+    return await this.userModel.findByIdAndUpdate(
+      id,
+      { banned: banned.banned },
+      { new: true },
+    );
+  }
 }

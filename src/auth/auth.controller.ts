@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignUpDto } from './dto/signup.dto';
 import { LoginDto } from './dto/login.dto';
@@ -29,5 +29,15 @@ export class AuthController {
     }[]
   > {
     return this.authService.allUsers();
+  }
+
+  @Put('/banned/:id')
+  async bannedUser(
+    @Param('id')
+    id: string,
+    @Body()
+    banned: { banned: boolean },
+  ): Promise<SignUpDto> {
+    return this.authService.updateUser(id, banned);
   }
 }
