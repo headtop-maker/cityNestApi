@@ -25,7 +25,9 @@ export class ImportantService {
   async findAllByrecipientImportantMessage(
     recipient: string,
   ): Promise<Important[]> {
-    const imporatant = await this.importantModel.find({ recipient: recipient });
+    const imporatant = await this.importantModel
+      .find({ recipient: recipient })
+      .sort({ createdAt: -1 });
     return imporatant;
   }
 }
