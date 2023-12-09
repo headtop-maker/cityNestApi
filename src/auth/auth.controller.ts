@@ -37,7 +37,13 @@ export class AuthController {
     id: string,
     @Body()
     banned: { banned: boolean },
-  ): Promise<SignUpDto> {
+  ): Promise<{
+    id: number;
+    name: string;
+    email: string;
+    banned: boolean;
+    userRole: UserRole;
+  }> {
     return this.authService.updateUser(id, banned);
   }
 }

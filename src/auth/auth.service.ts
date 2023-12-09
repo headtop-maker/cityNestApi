@@ -84,11 +84,27 @@ export class AuthService {
   async updateUser(
     id: string,
     banned: { banned: boolean },
-  ): Promise<SignUpDto> {
-    return await this.userModel.findByIdAndUpdate(
+  ): Promise<{
+    id: number;
+    name: string;
+    email: string;
+    banned: boolean;
+    userRole: UserRole;
+  }> {
+    const currentUser = await this.userModel.findByIdAndUpdate(
       id,
       { banned: banned.banned },
       { new: true },
     );
+
+    const filtred = {
+      id: currentUser.id,
+      name: currentUser.name,
+      email: currentUser.email,
+      banned: currentUser.banned,
+      userRole: currentUser.userRole,
+    };
+
+    return filtred;
   }
 }
