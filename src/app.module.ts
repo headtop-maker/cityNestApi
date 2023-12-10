@@ -7,6 +7,9 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { NewsModule } from './news/news.module';
 import { AuthModule } from './auth/auth.module';
 import { ImportantModule } from './important/important.module';
+import { UploadModule } from './upload/upload.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -19,6 +22,11 @@ import { ImportantModule } from './important/important.module';
     NewsModule,
     AuthModule,
     ImportantModule,
+    UploadModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..'),
+      renderPath: 'uploads',
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],

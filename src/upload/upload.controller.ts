@@ -1,0 +1,39 @@
+import {
+  Controller,
+  Get,
+  Param,
+  Post,
+  Res,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+
+@Controller('upload')
+export class UploadController {
+  @Post()
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: './uploads',
+        filename: (_, file, callback) => {
+          const name = file.originalname.split('.')[0];
+          const ext = file.originalname.split('.')[1];
+          callback(null, `${name}.${ext}`);
+        },
+      }),
+    }),
+  )
+  uploadFile(
+    @UploadedFile()
+    file: Express.Multer.File,
+  ) {
+    console.log(file);
+  }
+
+  @Get(':imgpath')
+  seeUploadedFile(@Param('imgpath') image, @Res() res) {
+    return res.sendFile(image, { root: 'uploads' });
+  }
+}
