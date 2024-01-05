@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
+import { UploadService } from './upload.service';
 
 @Controller('upload')
 export class UploadController {
@@ -32,8 +33,15 @@ export class UploadController {
     console.log(file);
   }
 
+  constructor(private uploadService: UploadService) {}
+
   @Get(':imgpath')
   seeUploadedFile(@Param('imgpath') image, @Res() res) {
     return res.sendFile(image, { root: 'uploads' });
+  }
+
+  @Get()
+  seeAllUploadedFile() {
+    return this.uploadService.getAllUploadsFiles();
   }
 }
