@@ -1,8 +1,11 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { NewsService } from './news.service';
 import { News } from './schemas/news.shema';
 import { CreateNewskDto } from './dto/create-news.dto';
+import { AuthGuard } from '@nestjs/passport';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
+@ApiBearerAuth()
 @Controller('news')
 export class NewsController {
   constructor(private newsService: NewsService) {}
@@ -13,6 +16,7 @@ export class NewsController {
   }
 
   @Post()
+  @UseGuards(AuthGuard())
   async createNews(
     @Body()
     news: CreateNewskDto,

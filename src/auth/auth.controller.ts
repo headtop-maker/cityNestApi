@@ -1,9 +1,20 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignUpDto } from './dto/signup.dto';
 import { LoginDto } from './dto/login.dto';
 import { UserRole } from './schemas/user.schema';
+import { AuthGuard } from '@nestjs/passport';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Авторизация и регистрация')
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
@@ -19,6 +30,7 @@ export class AuthController {
   }
 
   @Get()
+  @UseGuards(AuthGuard())
   async getAllUsers(): Promise<
     {
       id: number;
@@ -32,6 +44,7 @@ export class AuthController {
   }
 
   @Put('/banned/:id')
+  @UseGuards(AuthGuard())
   async bannedUser(
     @Param('id')
     id: string,

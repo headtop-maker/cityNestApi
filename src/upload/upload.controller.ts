@@ -5,15 +5,20 @@ import {
   Post,
   Res,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { UploadService } from './upload.service';
+import { AuthGuard } from '@nestjs/passport';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
+@ApiBearerAuth()
 @Controller('upload')
 export class UploadController {
   @Post()
+  @UseGuards(AuthGuard())
   @UseInterceptors(
     FileInterceptor('file', {
       storage: diskStorage({
