@@ -3,9 +3,10 @@ import { NewsService } from './news.service';
 import { News } from './schemas/news.shema';
 import { CreateNewskDto } from './dto/create-news.dto';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @ApiBearerAuth()
+@ApiTags('Новости')
 @Controller('news')
 export class NewsController {
   constructor(private newsService: NewsService) {}

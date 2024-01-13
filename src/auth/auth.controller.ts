@@ -12,7 +12,7 @@ import { SignUpDto } from './dto/signup.dto';
 import { LoginDto } from './dto/login.dto';
 import { UserRole } from './schemas/user.schema';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiTags, ApiOperation } from '@nestjs/swagger';
 
 @ApiTags('Авторизация и регистрация')
 @Controller('auth')
@@ -29,6 +29,7 @@ export class AuthController {
     return this.authService.login(loginDto);
   }
 
+  @ApiOperation({ summary: 'Получить пользователей' })
   @Get()
   @UseGuards(AuthGuard())
   async getAllUsers(): Promise<
@@ -42,7 +43,7 @@ export class AuthController {
   > {
     return this.authService.allUsers();
   }
-
+  @ApiOperation({ summary: 'Заблокировать пользователя' })
   @Put('/banned/:id')
   @UseGuards(AuthGuard())
   async bannedUser(
