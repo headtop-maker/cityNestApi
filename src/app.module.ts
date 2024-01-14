@@ -10,6 +10,9 @@ import { ImportantModule } from './important/important.module';
 import { UploadModule } from './upload/upload.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { CategoryModule } from './category/category.module';
+
+import { AdsboardModule } from './adsboard/adsboard.module';
 
 @Module({
   imports: [
@@ -27,6 +30,8 @@ import { join } from 'path';
       rootPath: join(__dirname, '..'),
       renderPath: 'uploads',
     }),
+    CategoryModule,
+    AdsboardModule,
   ],
   controllers: [AppController],
   providers: [AppService],
