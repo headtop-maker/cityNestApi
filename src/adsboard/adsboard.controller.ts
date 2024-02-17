@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards, Get } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards, Get, Param } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AdsboardService } from './adsboard.service';
 import { AuthGuard } from '@nestjs/passport';
@@ -25,5 +25,14 @@ export class AdsboardController {
   @Get()
   async getAllIAds(): Promise<AdsBoard[]> {
     return this.adsboardService.findAllAds();
+  }
+
+  @ApiOperation({ summary: 'Получить все услуги по имени категории' })
+  @Get(':categoryName')
+  async getBook(
+    @Param('categoryName')
+    categoryName: string,
+  ): Promise<AdsBoard[]> {
+    return this.adsboardService.findByCategoryName(categoryName);
   }
 }

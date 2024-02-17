@@ -18,6 +18,10 @@ export class AdsBoard {
   @Prop()
   categoryName: string;
 
+  @ApiProperty({ example: 'что то предоставляем', description: 'заголовок' })
+  @Prop()
+  title: string;
+
   @ApiProperty({ example: 'строительные', description: 'описание' })
   @Prop()
   description: string;
