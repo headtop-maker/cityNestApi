@@ -13,6 +13,9 @@ import { join } from 'path';
 import { CategoryModule } from './category/category.module';
 
 import { AdsboardModule } from './adsboard/adsboard.module';
+import { ImportantContactsController } from './important-contacts/important-contacts.controller';
+import { ImportantContactService } from './important-contacts/important-contacts.service';
+import { ImportantContactsModule } from './important-contacts/important-contacts.module';
 
 @Module({
   imports: [
@@ -32,6 +35,7 @@ import { AdsboardModule } from './adsboard/adsboard.module';
     }),
     CategoryModule,
     AdsboardModule,
+    ImportantContactsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

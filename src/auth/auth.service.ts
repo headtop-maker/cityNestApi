@@ -16,9 +16,7 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async signUp(
-    singUpDto: SignUpDto,
-  ): Promise<{ token: string; role: UserRole }> {
+  async signUp(singUpDto: SignUpDto): Promise<{ message: string }> {
     const { name, email, password, banned, userRole } = singUpDto;
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -34,8 +32,9 @@ export class AuthService {
     const token = this.jwtService.sign({ id: user._id });
 
     const role = await this.userModel.findOne({ email });
-
-    return { token, role: role.userRole };
+    if (token && role) {
+      return { message: 'Ожидайте активации пользователя' };
+    }
   }
 
   async login(
