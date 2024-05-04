@@ -84,6 +84,28 @@ export class AuthService {
     return filtred;
   }
 
+  async adminsUsers(): Promise<
+    {
+      id: number;
+      name: string;
+      email: string;
+      banned: boolean;
+      userRole: UserRole;
+    }[]
+  > {
+    const users = await this.userModel.find({ userRole: UserRole.admin });
+    console.log('users', users);
+    const filtred = users.map((item) => ({
+      id: item.id,
+      name: item.name,
+      email: item.email,
+      banned: item.banned,
+      userRole: item.userRole,
+    }));
+
+    return filtred;
+  }
+
   async updateUser(
     id: string,
     banned: { banned: boolean },

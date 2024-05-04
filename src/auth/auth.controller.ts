@@ -43,6 +43,22 @@ export class AuthController {
   > {
     return this.authService.allUsers();
   }
+
+  @ApiOperation({ summary: 'Получить администраторов' })
+  @Get('/admins')
+  @UseGuards(AuthGuard())
+  async getAdminsUsers(): Promise<
+    {
+      id: number;
+      name: string;
+      email: string;
+      banned: boolean;
+      userRole: UserRole;
+    }[]
+  > {
+    return this.authService.adminsUsers();
+  }
+
   @ApiOperation({ summary: 'Заблокировать пользователя' })
   @Put('/banned/:id')
   @UseGuards(AuthGuard())
