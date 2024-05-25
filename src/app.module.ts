@@ -16,6 +16,9 @@ import { AdsboardModule } from './adsboard/adsboard.module';
 import { ImportantContactsController } from './important-contacts/important-contacts.controller';
 import { ImportantContactService } from './important-contacts/important-contacts.service';
 import { ImportantContactsModule } from './important-contacts/important-contacts.module';
+import { DocumentsController } from './documents/documents.controller';
+import { DocumentsService } from './documents/documents.service';
+import { DocumentsModule } from './documents/documents.module';
 
 @Module({
   imports: [
@@ -36,6 +39,7 @@ import { ImportantContactsModule } from './important-contacts/important-contacts
     CategoryModule,
     AdsboardModule,
     ImportantContactsModule,
+    DocumentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
