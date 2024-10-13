@@ -20,7 +20,8 @@ export class ImportantController {
   @ApiOperation({ summary: 'Создать обращение' })
   @ApiResponse({ status: 200, type: Important })
   @Post()
-  @UseGuards(AuthGuard())
+  // разблокировать
+  // @UseGuards(AuthGuard())
   async createImportantMessage(
     @Body()
     important: ImportantDto,

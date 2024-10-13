@@ -46,7 +46,7 @@ export class AuthController {
 
   @ApiOperation({ summary: 'Получить администраторов' })
   @Get('/admins')
-  @UseGuards(AuthGuard())
+  // @UseGuards(AuthGuard()) // дыра в безопасности
   async getAdminsUsers(): Promise<
     {
       id: number;

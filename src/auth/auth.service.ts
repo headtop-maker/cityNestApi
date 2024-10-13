@@ -94,7 +94,6 @@ export class AuthService {
     }[]
   > {
     const users = await this.userModel.find({ userRole: UserRole.admin });
-    console.log('users', users);
     const filtred = users.map((item) => ({
       id: item.id,
       name: item.name,
