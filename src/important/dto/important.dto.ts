@@ -8,6 +8,13 @@ export class ImportantDto {
   readonly author: string;
   @IsNotEmpty()
   @IsString()
+  @ApiProperty({
+    example: 'Петров Олег Александрович',
+    description: 'Имя для отображения',
+  })
+  readonly authorName: string;
+  @IsNotEmpty()
+  @IsString()
   @ApiProperty({ example: 'kolia@mail.ru', description: 'Получатель' })
   readonly recipient: string;
   @IsNotEmpty()

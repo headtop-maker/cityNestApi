@@ -6,6 +6,12 @@ export class Important {
   @ApiProperty({ example: 'headtop@mail.ru', description: 'Автор сообщения' })
   @Prop()
   author: string;
+  @ApiProperty({
+    example: 'Петров Олег Александрович',
+    description: 'Имя для отображения',
+  })
+  @Prop({ default: 'Серверное сообщение' })
+  authorName: string;
   @ApiProperty({ example: 'kolia@mail.ru', description: 'Получатель' })
   @Prop()
   recipient: string;
