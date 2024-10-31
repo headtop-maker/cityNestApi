@@ -15,6 +15,7 @@ import { CategoryModule } from './category/category.module';
 import { AdsboardModule } from './adsboard/adsboard.module';
 import { ImportantContactsModule } from './important-contacts/important-contacts.module';
 import { DocumentsModule } from './documents/documents.module';
+import { VersionModule } from './version/version.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { DocumentsModule } from './documents/documents.module';
     AdsboardModule,
     ImportantContactsModule,
     DocumentsModule,
+    VersionModule,
   ],
   controllers: [AppController],
   providers: [AppService],
