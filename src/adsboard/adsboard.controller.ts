@@ -1,4 +1,12 @@
-import { Body, Controller, Post, UseGuards, Get, Param } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  UseGuards,
+  Get,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AdsboardService } from './adsboard.service';
 import { AuthGuard } from '@nestjs/passport';
@@ -34,5 +42,14 @@ export class AdsboardController {
     categoryName: string,
   ): Promise<AdsBoard[]> {
     return this.adsboardService.findByCategoryName(categoryName);
+  }
+
+  @Delete(':id')
+  @UseGuards(AuthGuard())
+  async deleteAdsById(
+    @Param('id')
+    id: string,
+  ): Promise<string> {
+    return this.adsboardService.deleteAdsById(id);
   }
 }

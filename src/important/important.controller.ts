@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { ImportantService } from './important.service';
 
 import { ImportantDto } from './dto/important.dto';
@@ -43,5 +51,14 @@ export class ImportantController {
     recipient: string,
   ): Promise<Important[]> {
     return this.importantService.findAllByrecipientImportantMessage(recipient);
+  }
+
+  @Delete(':id')
+  @UseGuards(AuthGuard())
+  async deleteImportantById(
+    @Param('id')
+    id: string,
+  ): Promise<string> {
+    return this.importantService.deleteImportantMessageById(id);
   }
 }

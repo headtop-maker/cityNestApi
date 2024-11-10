@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { DocumentsService } from './documents.service';
 import { AuthGuard } from '@nestjs/passport';
@@ -24,5 +32,14 @@ export class DocumentsController {
   @Get()
   async getDocuments(): Promise<UserDocumentsService[]> {
     return this.userDocumentsService.findDocuments();
+  }
+
+  @Delete(':id')
+  @UseGuards(AuthGuard())
+  async deleteDocumentsById(
+    @Param('id')
+    id: string,
+  ): Promise<string> {
+    return this.userDocumentsService.deleteDocumentById(id);
   }
 }

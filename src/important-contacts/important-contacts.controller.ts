@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ImportantContactService } from './important-contacts.service';
 import { ImportantContactsService } from './schemas/important-contacts.schema';
@@ -24,5 +32,14 @@ export class ImportantContactsController {
   @Get()
   async getAllImportant(): Promise<ImportantContactsService[]> {
     return this.importantContactService.findImportantContacts();
+  }
+
+  @Delete(':id')
+  @UseGuards(AuthGuard())
+  async deleteContactById(
+    @Param('id')
+    id: string,
+  ): Promise<string> {
+    return this.importantContactService.deleteContactById(id);
   }
 }

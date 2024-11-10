@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { Important } from './schemas/important.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
@@ -29,5 +33,20 @@ export class ImportantService {
       .find({ recipient: recipient })
       .sort({ createdAt: -1 });
     return imporatant;
+  }
+
+  async deleteImportantMessageById(id: string): Promise<string> {
+    const isValidId = mongoose.isValidObjectId(id);
+
+    if (!isValidId) {
+      throw new BadRequestException('некорректный ID');
+    }
+
+    const news = await this.importantModel.deleteOne({ _id: id });
+
+    if (!news) {
+      throw new NotFoundException('не найдено');
+    }
+    return 'ok';
   }
 }

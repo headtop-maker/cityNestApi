@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { NewsService } from './news.service';
 import { News } from './schemas/news.shema';
 import { CreateNewskDto } from './dto/create-news.dto';
@@ -31,5 +39,14 @@ export class NewsController {
     id: string,
   ): Promise<News> {
     return this.newsService.findNewsById(id);
+  }
+
+  @Delete(':id')
+  @UseGuards(AuthGuard())
+  async deleteNewsById(
+    @Param('id')
+    id: string,
+  ): Promise<string> {
+    return this.newsService.deleteNewsById(id);
   }
 }

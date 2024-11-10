@@ -38,4 +38,19 @@ export class AdsboardService {
     }
     return allFilterAds;
   }
+
+  async deleteAdsById(id: string): Promise<string> {
+    const isValidId = mongoose.isValidObjectId(id);
+
+    if (!isValidId) {
+      throw new BadRequestException('некорректный ID');
+    }
+
+    const news = await this.adsBoardService.deleteOne({ _id: id });
+
+    if (!news) {
+      throw new NotFoundException('не найдено');
+    }
+    return 'ok';
+  }
 }

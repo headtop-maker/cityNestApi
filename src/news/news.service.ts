@@ -38,4 +38,19 @@ export class NewsService {
     }
     return news;
   }
+
+  async deleteNewsById(id: string): Promise<string> {
+    const isValidId = mongoose.isValidObjectId(id);
+
+    if (!isValidId) {
+      throw new BadRequestException('некорректный ID');
+    }
+
+    const news = await this.newsModel.deleteOne({ _id: id });
+
+    if (!news) {
+      throw new NotFoundException('не найдено');
+    }
+    return 'ok';
+  }
 }

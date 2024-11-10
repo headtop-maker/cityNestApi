@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { UserDocumentsService } from './schemas/documents.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
@@ -20,5 +24,20 @@ export class DocumentsService {
   async findDocuments(): Promise<UserDocumentsService[]> {
     const documents = await this.userDocumentsService.find();
     return documents;
+  }
+
+  async deleteDocumentById(id: string): Promise<string> {
+    const isValidId = mongoose.isValidObjectId(id);
+
+    if (!isValidId) {
+      throw new BadRequestException('некорректный ID');
+    }
+
+    const news = await this.userDocumentsService.deleteOne({ _id: id });
+
+    if (!news) {
+      throw new NotFoundException('не найдено');
+    }
+    return 'ok';
   }
 }

@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { UserCategoryService } from './schemas/category.schema';
 import { AuthGuard } from '@nestjs/passport';
@@ -24,5 +32,14 @@ export class CategoryController {
   @Get()
   async getAllImportant(): Promise<UserCategoryService[]> {
     return this.userServicesService.findAllUserCategory();
+  }
+
+  @Delete(':id')
+  @UseGuards(AuthGuard())
+  async deleteNewsById(
+    @Param('id')
+    id: string,
+  ): Promise<string> {
+    return this.userServicesService.deleteCategoryById(id);
   }
 }
