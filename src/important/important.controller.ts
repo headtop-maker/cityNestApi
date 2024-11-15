@@ -18,6 +18,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import { UserAuthGuard } from 'src/auth/user-auth.guard';
 
 @ApiBearerAuth()
 @ApiTags('Центр сообщений')
@@ -29,7 +30,7 @@ export class ImportantController {
   @ApiResponse({ status: 200, type: Important })
   @Post()
   // разблокировать
-  // @UseGuards(AuthGuard())
+  @UseGuards(UserAuthGuard)
   async createImportantMessage(
     @Body()
     important: ImportantDto,
