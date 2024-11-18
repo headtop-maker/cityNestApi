@@ -27,5 +27,9 @@ export class Important {
   @ApiProperty({ example: 'false', description: 'Важное' })
   @Prop({ default: false })
   isImportant: boolean;
+
+  @ApiProperty({ example: '', description: '' })
+  @Prop({ default: '' })
+  imageBase64: string;
 }
 export const ImportantSchema = SchemaFactory.createForClass(Important);

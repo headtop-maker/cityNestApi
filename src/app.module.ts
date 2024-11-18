@@ -17,6 +17,7 @@ import { ImportantContactsModule } from './important-contacts/important-contacts
 import { DocumentsModule } from './documents/documents.module';
 import { VersionModule } from './version/version.module';
 import { FirebaseTokensModule } from './firebase-tokens/firebase-tokens.module';
+import { PrepareAdsModule } from './prepare-ads/prepare-ads.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { FirebaseTokensModule } from './firebase-tokens/firebase-tokens.module';
     DocumentsModule,
     VersionModule,
     FirebaseTokensModule,
+    PrepareAdsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
