@@ -1,11 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsBase64,
-  IsBoolean,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-} from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class ImportantDto {
   @IsNotEmpty()
@@ -39,7 +33,6 @@ export class ImportantDto {
   @ApiProperty({ example: 'false', description: 'Важное' })
   readonly isImportant: boolean;
   @IsOptional()
-  @IsBase64()
   @IsString()
   @ApiProperty({
     example: '',
