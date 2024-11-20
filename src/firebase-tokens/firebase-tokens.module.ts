@@ -4,6 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { FireBaseTokensSchema } from './schemas/firebase-tokens.schema';
 import { FirebaseTokensService } from './firebase-tokens.service';
 import { FirebaseTokensController } from './firebase-tokens.controller';
+import { FirebaseService } from 'src/firebase/firebase.service';
 
 @Module({
   imports: [
@@ -13,7 +14,7 @@ import { FirebaseTokensController } from './firebase-tokens.controller';
     ]),
   ],
   controllers: [FirebaseTokensController],
-  providers: [FirebaseTokensService],
+  providers: [FirebaseTokensService, FirebaseService],
   exports: [FirebaseTokensService],
 })
 export class FirebaseTokensModule {}

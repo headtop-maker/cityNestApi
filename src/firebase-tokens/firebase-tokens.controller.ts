@@ -29,6 +29,22 @@ export class FirebaseTokensController {
     return this.firebaseTokensService.addToken(token);
   }
 
+  @ApiOperation({ summary: 'отправить пуш уведомление' })
+  @Post('/send')
+  @UseGuards(AuthGuard())
+  async sendPush(
+    @Body()
+    data: {
+      tokens: string[];
+      notification: {
+        title: string;
+        body: string;
+      };
+    },
+  ): Promise<{ data: string }> {
+    return this.firebaseTokensService.sendMessage(data);
+  }
+
   @Get()
   @UseGuards(AuthGuard())
   async getAllTokens(): Promise<SchemaTokens[]> {
