@@ -23,7 +23,7 @@ export class FirebaseTokensController {
   @ApiOperation({ summary: 'Добавить токен' })
   @Post()
   @UseGuards(AuthGuard())
-  async createImportantMessage(
+  async createToken(
     @Body()
     token: SchemaTokens,
   ): Promise<SchemaTokens> {
@@ -55,7 +55,7 @@ export class FirebaseTokensController {
   @UseGuards(UserAuthGuard)
   @ApiOperation({ summary: 'Получить токен' })
   @Get(':owner')
-  async getBook(
+  async getToken(
     @Param('owner')
     categoryName: string,
   ): Promise<SchemaTokens[]> {
