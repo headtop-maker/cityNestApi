@@ -20,7 +20,7 @@ export class FirebaseTokensService {
     const getToken = await this.fireBaseTokensService.findOne({
       tokens: token.tokens,
     });
-    if (!getToken.owner) {
+    if (!getToken.owner && !!token.owner) {
       const filter = { tokens: token.tokens };
       const update = { owner: token.owner };
       const res = await this.fireBaseTokensService.findOneAndUpdate(
