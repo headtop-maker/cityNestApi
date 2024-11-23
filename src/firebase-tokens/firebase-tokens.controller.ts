@@ -12,6 +12,7 @@ import { FirebaseTokensService } from './firebase-tokens.service';
 import { FireBaseTokensService as SchemaTokens } from './schemas/firebase-tokens.schema';
 
 import { AuthGuard } from '@nestjs/passport';
+import { UserAuthGuard } from 'src/auth/user-auth.guard';
 
 @ApiBearerAuth()
 @ApiTags('Firebase tokens')
@@ -49,6 +50,16 @@ export class FirebaseTokensController {
   @UseGuards(AuthGuard())
   async getAllTokens(): Promise<SchemaTokens[]> {
     return this.firebaseTokensService.findTokens();
+  }
+
+  @UseGuards(UserAuthGuard)
+  @ApiOperation({ summary: 'Получить токен' })
+  @Get(':owner')
+  async getBook(
+    @Param('owner')
+    categoryName: string,
+  ): Promise<SchemaTokens[]> {
+    return this.firebaseTokensService.findByEmail(categoryName);
   }
 
   @Delete(':token')

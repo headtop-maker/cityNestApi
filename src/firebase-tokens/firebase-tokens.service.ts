@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 import { FireBaseTokensService } from './schemas/firebase-tokens.schema';
@@ -16,12 +20,36 @@ export class FirebaseTokensService {
     const getToken = await this.fireBaseTokensService.findOne({
       tokens: token.tokens,
     });
+    if (!getToken.owner) {
+      const filter = { tokens: token.tokens };
+      const update = { owner: token.owner };
+      const res = await this.fireBaseTokensService.findOneAndUpdate(
+        filter,
+        update,
+      );
+      return res;
+    }
     if (!getToken) {
       const res = await this.fireBaseTokensService.create(token);
       return res;
     }
 
     return;
+  }
+
+  async findByEmail(email: string): Promise<FireBaseTokensService[]> {
+    if (!email) {
+      throw new BadRequestException('некорректный email');
+    }
+
+    const token = await this.fireBaseTokensService
+      .find({ owner: email })
+      .exec();
+
+    if (!token) {
+      throw new NotFoundException('не найдено');
+    }
+    return token;
   }
 
   async findTokens(): Promise<FireBaseTokensService[]> {
