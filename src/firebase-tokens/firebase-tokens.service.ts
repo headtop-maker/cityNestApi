@@ -18,7 +18,7 @@ export class FirebaseTokensService {
 
   async addToken(token: FireBaseTokensService): Promise<FireBaseTokensService> {
     const getToken = await this.fireBaseTokensService.findOne({
-      tokens: token.tokens,
+      owner: token.owner,
     });
 
     if (!getToken) {
@@ -26,13 +26,15 @@ export class FirebaseTokensService {
       return res;
     }
 
-    if (typeof getToken['owner'] === 'undefined' && !!token.owner) {
-      const filter = { tokens: token.tokens };
-      const update = { owner: token.owner };
+    if (getToken && !!token.owner && !!token.tokens) {
+      const filter = { owner: token.owner };
+      const update = { tokens: token.tokens };
+
       const res = await this.fireBaseTokensService.findOneAndUpdate(
         filter,
         update,
       );
+
       return res;
     }
 
