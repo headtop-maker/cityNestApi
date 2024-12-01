@@ -22,7 +22,7 @@ export class FirebaseTokensController {
 
   @ApiOperation({ summary: 'Добавить токен' })
   @Post()
-  @UseGuards(AuthGuard())
+  @UseGuards(UserAuthGuard)
   async createToken(
     @Body()
     token: SchemaTokens,
@@ -32,7 +32,7 @@ export class FirebaseTokensController {
 
   @ApiOperation({ summary: 'отправить пуш уведомление' })
   @Post('/send')
-  @UseGuards(AuthGuard())
+  @UseGuards(UserAuthGuard)
   async sendPush(
     @Body()
     data: {
