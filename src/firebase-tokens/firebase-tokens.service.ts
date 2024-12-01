@@ -67,8 +67,13 @@ export class FirebaseTokensService {
       title: string;
       body: string;
     };
+    data?: Record<string, string>;
   }): Promise<{ data: string }> {
-    this.firebaseService.sendNotification(message.tokens, message.notification);
+    this.firebaseService.sendNotification(
+      message.tokens,
+      message.notification,
+      message.data,
+    );
     return { data: 'ok' };
   }
 
