@@ -39,8 +39,9 @@ export class UploadController {
       storage: diskStorage({
         destination: './uploads',
         filename: (_, file, callback) => {
-          const name = file.originalname.split('.')[0];
-          const ext = file.originalname.split('.')[1];
+          const currentFile = decodeURIComponent(file.originalname);
+          const name = currentFile.split('.')[0];
+          const ext = currentFile.split('.')[1];
           callback(null, `${name}.${ext}`);
         },
       }),
