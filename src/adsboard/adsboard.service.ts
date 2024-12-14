@@ -20,7 +20,7 @@ export class AdsboardService {
   }
 
   async findAllAds(): Promise<AdsBoard[]> {
-    const allAds = await this.adsBoardService.find();
+    const allAds = await this.adsBoardService.find().sort({ updatedAt: -1 });
     return allAds;
   }
 
@@ -31,6 +31,8 @@ export class AdsboardService {
 
     const allFilterAds = await this.adsBoardService
       .find({ categoryName: categoryName })
+      .sort({ updatedAt: -1 })
+      .limit(30)
       .exec();
 
     if (!allFilterAds.length) {

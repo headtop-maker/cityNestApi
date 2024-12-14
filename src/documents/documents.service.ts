@@ -22,7 +22,9 @@ export class DocumentsService {
   }
 
   async findDocuments(): Promise<UserDocumentsService[]> {
-    const documents = await this.userDocumentsService.find();
+    const documents = await this.userDocumentsService
+      .find()
+      .sort({ updatedAt: -1 });
     return documents;
   }
 

@@ -15,7 +15,7 @@ export class NewsService {
   ) {}
 
   async findAllNews(): Promise<News[]> {
-    const news = await this.newsModel.find();
+    const news = await this.newsModel.find().sort({ updatedAt: -1 }).limit(30);
     return news;
   }
 

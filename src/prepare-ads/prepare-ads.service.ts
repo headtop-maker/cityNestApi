@@ -20,7 +20,7 @@ export class PrepareAdsService {
   }
 
   async findAllAds(): Promise<PrepareAds[]> {
-    const allAds = await this.adsBoardService.find();
+    const allAds = await this.adsBoardService.find().sort({ updatedAt: -1 });
     return allAds;
   }
 
