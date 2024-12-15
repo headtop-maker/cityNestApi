@@ -18,6 +18,7 @@ import { DocumentsModule } from './documents/documents.module';
 import { VersionModule } from './version/version.module';
 import { FirebaseTokensModule } from './firebase-tokens/firebase-tokens.module';
 import { PrepareAdsModule } from './prepare-ads/prepare-ads.module';
+import { ImageUploadModule } from './imageUpload/imageUpload.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { PrepareAdsModule } from './prepare-ads/prepare-ads.module';
     AuthModule,
     ImportantModule,
     UploadModule,
+    ImageUploadModule,
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..'),
       renderPath: 'uploads',
