@@ -45,6 +45,7 @@ export class ImportantController {
   }
 
   @ApiOperation({ summary: 'Получить сообщения по получателю' })
+  @UseGuards(UserAuthGuard)
   @ApiResponse({ status: 200, type: [Important] })
   @Get(':recipient')
   async findImportantByRecipient(
@@ -55,6 +56,7 @@ export class ImportantController {
   }
 
   @ApiOperation({ summary: 'Получить сообщения по автору' })
+  @UseGuards(UserAuthGuard)
   @ApiResponse({ status: 200, type: [Important] })
   @Get(':author')
   async findImportantByAuthor(
