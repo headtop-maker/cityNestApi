@@ -44,7 +44,7 @@ export class ImportantController {
     return this.importantService.findAllImportantMessage();
   }
 
-  @ApiOperation({ summary: 'Получить сообщения' })
+  @ApiOperation({ summary: 'Получить сообщения по получателю' })
   @ApiResponse({ status: 200, type: [Important] })
   @Get(':recipient')
   async findImportantByRecipient(
@@ -52,6 +52,16 @@ export class ImportantController {
     recipient: string,
   ): Promise<Important[]> {
     return this.importantService.findAllByrecipientImportantMessage(recipient);
+  }
+
+  @ApiOperation({ summary: 'Получить сообщения по автору' })
+  @ApiResponse({ status: 200, type: [Important] })
+  @Get(':author')
+  async findImportantByAuthor(
+    @Param('author')
+    author: string,
+  ): Promise<Important[]> {
+    return this.importantService.findAllByAuthorImportantMessage(author);
   }
 
   @Delete(':id')

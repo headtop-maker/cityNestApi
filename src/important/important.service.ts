@@ -35,6 +35,13 @@ export class ImportantService {
     return imporatant;
   }
 
+  async findAllByAuthorImportantMessage(author: string): Promise<Important[]> {
+    const imporatant = await this.importantModel
+      .find({ author: author })
+      .sort({ createdAt: -1 });
+    return imporatant;
+  }
+
   async deleteImportantMessageById(id: string): Promise<string> {
     const isValidId = mongoose.isValidObjectId(id);
 
