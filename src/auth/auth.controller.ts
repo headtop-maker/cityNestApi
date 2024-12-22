@@ -12,8 +12,9 @@ import { SignUpDto } from './dto/signup.dto';
 import { LoginDto } from './dto/login.dto';
 import { UserRole } from './schemas/user.schema';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
-
+import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
+import { UserAuthGuard } from './user-auth.guard';
+@ApiBearerAuth()
 @ApiTags('Авторизация и регистрация')
 @Controller('auth')
 export class AuthController {
@@ -46,7 +47,7 @@ export class AuthController {
 
   @ApiOperation({ summary: 'Получить администраторов' })
   @Get('/admins')
-  // @UseGuards(AuthGuard()) // дыра в безопасности
+  @UseGuards(UserAuthGuard)
   async getAdminsUsers(): Promise<
     {
       id: number;
