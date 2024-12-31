@@ -6,15 +6,15 @@ export class CreateNewskDto {
   @IsString()
   @ApiProperty({ example: 'headtop@mail.ru', description: 'Автор новости' })
   readonly author: string;
-  @IsNotEmpty()
+  // @IsNotEmpty()
   @IsString()
   @ApiProperty({ example: 'заголовок', description: 'Заголовок новости' })
   readonly title: string;
-  @IsNotEmpty()
+  // @IsNotEmpty()
   @IsString()
   @ApiProperty({ example: 'описание', description: 'Описание новости' })
   readonly description: string;
-  @IsNotEmpty()
+  // @IsNotEmpty()
   @IsString()
   @ApiProperty({
     example:
