@@ -7,4 +7,12 @@ export class UploadService {
   async getAllUploadsFiles() {
     return fs.readdirSync('uploads');
   }
+
+  async deleteFile(fileName: string) {
+    const pathToFile = 'uploads/' + fileName;
+    if (fs.existsSync(pathToFile)) {
+      fs.unlinkSync(pathToFile);
+    }
+    return 'ok';
+  }
 }

@@ -1,5 +1,6 @@
 import {
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -64,5 +65,14 @@ export class UploadController {
   @Get()
   seeAllUploadedFile() {
     return this.uploadService.getAllUploadsFiles();
+  }
+
+  @Delete(':fileName')
+  @UseGuards(AuthGuard())
+  async deleteImportantById(
+    @Param('fileName')
+    fileName: string,
+  ): Promise<string> {
+    return this.uploadService.deleteFile(fileName);
   }
 }
