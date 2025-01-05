@@ -6,12 +6,14 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { News } from './schemas/news.shema';
 import * as mongoose from 'mongoose';
+import { ImageUploadService } from 'src/imageUpload/imageUpload.service';
 
 @Injectable()
 export class NewsService {
   constructor(
     @InjectModel(News.name)
     private newsModel: mongoose.Model<News>,
+    private readonly imageService: ImageUploadService,
   ) {}
 
   async findAllNews(): Promise<News[]> {
@@ -45,12 +47,23 @@ export class NewsService {
     if (!isValidId) {
       throw new BadRequestException('некорректный ID');
     }
+    const currentImage = (await this.newsModel.findById(id)).image
+      .split('/')
+      .at(-1);
+
+    const allImages = await this.imageService.getAllUploadsFiles();
 
     const news = await this.newsModel.deleteOne({ _id: id });
 
     if (!news) {
       throw new NotFoundException('не найдено');
     }
+
+    if (!!currentImage) {
+      const isImage = allImages.some((item) => item === currentImage);
+      isImage && this.imageService.deleteFile(currentImage);
+    }
+
     return 'ok';
   }
 }

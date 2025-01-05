@@ -8,6 +8,7 @@ import { ImageUploadService } from './imageUpload.service';
 @Module({
   providers: [ImageUploadService],
   controllers: [ImageUploadController],
+  exports: [ImageUploadService],
   imports: [
     AuthModule,
     MulterModule.register({
