@@ -1,4 +1,9 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  forwardRef,
+  Inject,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserRole } from './schemas/user.schema';
 import { Model } from 'mongoose';
@@ -7,6 +12,7 @@ import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 import { SignUpDto } from './dto/signup.dto';
 import { LoginDto } from './dto/login.dto';
+import { FirebaseTokensService } from 'src/firebase-tokens/firebase-tokens.service';
 
 @Injectable()
 export class AuthService {
@@ -14,6 +20,8 @@ export class AuthService {
     @InjectModel(User.name)
     private userModel: Model<User>,
     private jwtService: JwtService,
+    @Inject(forwardRef(() => FirebaseTokensService))
+    private firebaseTokensService: FirebaseTokensService,
   ) {}
 
   async signUp(singUpDto: SignUpDto): Promise<{ message: string }> {
@@ -33,6 +41,7 @@ export class AuthService {
 
     const role = await this.userModel.findOne({ email });
     if (token && role) {
+      this.firebaseTokensService.adminsTokens();
       return { message: 'Ожидайте активации пользователя' };
     }
   }

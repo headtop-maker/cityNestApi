@@ -1,5 +1,7 @@
 import {
   BadRequestException,
+  forwardRef,
+  Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -15,6 +17,7 @@ export class FirebaseTokensService {
     @InjectModel(FireBaseTokensService.name)
     private fireBaseTokensService: mongoose.Model<FireBaseTokensService>,
     private readonly firebaseService: FirebaseService,
+    @Inject(forwardRef(() => AuthService))
     private readonly authService: AuthService,
   ) {}
 

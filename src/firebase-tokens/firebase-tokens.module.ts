@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { AuthModule } from 'src/auth/auth.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { FireBaseTokensSchema } from './schemas/firebase-tokens.schema';
@@ -8,7 +8,7 @@ import { FirebaseService } from 'src/firebase/firebase.service';
 
 @Module({
   imports: [
-    AuthModule,
+    forwardRef(() => AuthModule),
     MongooseModule.forFeature([
       { name: 'FireBaseTokensService', schema: FireBaseTokensSchema },
     ]),
