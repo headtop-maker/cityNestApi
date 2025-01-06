@@ -52,6 +52,12 @@ export class FirebaseTokensController {
     return this.firebaseTokensService.findTokens();
   }
 
+  @Get('/admin-tokens')
+  @UseGuards(AuthGuard())
+  async getAdminTokens(): Promise<string> {
+    return this.firebaseTokensService.adminsTokens();
+  }
+
   @UseGuards(UserAuthGuard)
   @ApiOperation({ summary: 'Получить токен' })
   @Get(':owner')

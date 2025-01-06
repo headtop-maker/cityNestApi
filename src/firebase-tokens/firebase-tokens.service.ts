@@ -7,6 +7,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 import { FireBaseTokensService } from './schemas/firebase-tokens.schema';
 import { FirebaseService } from 'src/firebase/firebase.service';
+import { AuthService } from 'src/auth/auth.service';
 
 @Injectable()
 export class FirebaseTokensService {
@@ -14,6 +15,7 @@ export class FirebaseTokensService {
     @InjectModel(FireBaseTokensService.name)
     private fireBaseTokensService: mongoose.Model<FireBaseTokensService>,
     private readonly firebaseService: FirebaseService,
+    private readonly authService: AuthService,
   ) {}
 
   async addToken(token: FireBaseTokensService): Promise<FireBaseTokensService> {
@@ -84,6 +86,29 @@ export class FirebaseTokensService {
 
     if (!result) {
       throw new NotFoundException('не найдено');
+    }
+    return 'ok';
+  }
+
+  async adminsTokens(): Promise<string> {
+    const admins = await this.authService.adminsUsers();
+    const tokens = await this.fireBaseTokensService.find();
+    const filtertokens = tokens
+      .map((item) => {
+        if (!!admins.some((it) => it.email === item.owner)) {
+          return item.tokens;
+        }
+        return;
+      })
+      .filter((it) => it !== undefined);
+    if (filtertokens.length > 0) {
+      await this.sendMessage({
+        tokens: filtertokens,
+        notification: {
+          title: 'Новая регистрация в сервисе',
+          body: 'Проверьте список пользователей ',
+        },
+      });
     }
     return 'ok';
   }
