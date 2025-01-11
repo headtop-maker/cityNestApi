@@ -58,7 +58,7 @@ export class ImportantController {
   @ApiOperation({ summary: 'Получить сообщения по автору' })
   @UseGuards(UserAuthGuard)
   @ApiResponse({ status: 200, type: [Important] })
-  @Get(':author')
+  @Get('/author/:author')
   async findImportantByAuthor(
     @Param('author')
     author: string,
