@@ -15,6 +15,13 @@ export class PrepareAdsService {
   ) {}
 
   async createAds(createAds: PrepareAds): Promise<PrepareAds> {
+    const isModerate = await this.adsBoardService.findOne({
+      email: createAds.email,
+    });
+
+    if (!!isModerate) {
+      throw new BadRequestException('не завершена модерация услуги');
+    }
     const res = await this.adsBoardService.create(createAds);
     return res;
   }
