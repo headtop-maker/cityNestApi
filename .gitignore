@@ -3,6 +3,7 @@
 /node_modules
 /imageUploads
 .env
+*.env
 
 # Logs
 logs
